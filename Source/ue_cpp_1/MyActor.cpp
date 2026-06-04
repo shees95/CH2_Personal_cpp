@@ -15,19 +15,24 @@ AMyActor::AMyActor()
 void AMyActor::BeginPlay()
 {
 	Super::BeginPlay();
-	FVector OriginLocation = GetActorLocation();
+	FVector OriginLocation = FVector(0,0,50);
 	SetActorLocation(OriginLocation);
 	
 	for(int index=0; index<10; index++)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Index : %d"), index);
+		
+		if (!TriggerEvent()) continue;
+		
+		triggercnt++;
+		
 		Move();
 		Turn();
 
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("Index : %d"), index));
-		}
-		UE_LOG(LogTemp, Warning, TEXT("Index : %d"), index);
+		
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("Index : %d"), index));
+		
+		
 	}
 }
 
@@ -41,7 +46,6 @@ void AMyActor::Tick(float DeltaTime)
 
 void AMyActor::Move()
 {
-	if (!TriggerEvent()) return;
 	changed_Loc++;
 
 	FVector Target;
@@ -69,7 +73,6 @@ void AMyActor::Move()
 
 void AMyActor::Turn()
 {
-	if (!TriggerEvent()) return;
 	changed_Rot++;
 
 	FRotator DeltaRotation;
