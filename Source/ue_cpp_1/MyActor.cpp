@@ -15,30 +15,27 @@ AMyActor::AMyActor()
 void AMyActor::BeginPlay()
 {
 	Super::BeginPlay();
-	FVector OriginLocation = FVector(0, 0, 50);
+	FVector OriginLocation = GetActorLocation();
 	SetActorLocation(OriginLocation);
 	
-}
-
-// Called every frame
-void AMyActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	index++;
-
-	if (index < 10)
-
+	for(int index=0; index<10; index++)
 	{
 		Move();
 		Turn();
 
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(6, 5, FColor::Red, FString::Printf(TEXT("Index : %d"), index));
+			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("Index : %d"), index));
 		}
 		UE_LOG(LogTemp, Warning, TEXT("Index : %d"), index);
 	}
+}
+
+// Called every frame
+void AMyActor::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
 	
 }
 
@@ -61,12 +58,10 @@ void AMyActor::Move()
 	FVector CurrentLocation = GetActorLocation();
 	
 
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(5, 5, FColor::Red, *CurrentLocation.ToString());
-		GEngine->AddOnScreenDebugMessage(4, 5, FColor::Red, FString::Printf(TEXT("C_Loc : %d"), changed_Loc));
-		GEngine->AddOnScreenDebugMessage(3, 5, FColor::Red, FString::Printf(TEXT("Moved_Length : %f"), Moved_Length));
-	}
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, *CurrentLocation.ToString());
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("C_Loc : %d"), changed_Loc));
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("Moved_Length : %f"), Moved_Length));
+	
 	UE_LOG(LogTemp, Warning, TEXT("CurrentLocation : %s"), *CurrentLocation.ToString());
 	UE_LOG(LogTemp, Warning, TEXT("changed_Loc : %d"), changed_Loc);
 	UE_LOG(LogTemp, Warning, TEXT("Moved_Length : %f"), Moved_Length);
@@ -86,11 +81,10 @@ void AMyActor::Turn()
 	AddActorWorldRotation(DeltaRotation);
 
 	FRotator CurrentRotation = GetActorRotation();
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(2, 5, FColor::Red, *DeltaRotation.ToString());
-		GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, FString::Printf(TEXT("C_Rot : %d"), changed_Rot));
-	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, *DeltaRotation.ToString());
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, FString::Printf(TEXT("C_Rot : %d"), changed_Rot));
+	
 	UE_LOG(LogTemp, Warning, TEXT("DeltaRotation : %s"), *DeltaRotation.ToString());
 	UE_LOG(LogTemp, Warning, TEXT("changed_Rot : %d"), changed_Rot);
 }

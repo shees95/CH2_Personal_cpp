@@ -14,7 +14,6 @@ class UE_CPP_1_API AMyActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMyActor();
-	int index = 0;
 	int changed_Loc = 0;
 	int changed_Rot = 0;
 	
